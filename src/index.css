@@ -70,7 +70,7 @@ h3,
 .main-content {
   flex: 1;
   margin-left: var(--sidebar-width);
-  background: var(--bg-main);
+  background: #fff;
   transform-origin: center center;
   will-change: transform;
 }
