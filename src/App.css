@@ -884,15 +884,27 @@
     margin-top: 3rem;
   }
 
-  /* Mobile Nav Styles */
+  /* Mobile Nav Styles - Sidebar completely hidden by default */
   .sidebar {
     transform: translateX(-100%);
     width: 280px;
     padding: 1.5rem 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    z-index: 1001;
   }
 
   .menu-open .sidebar {
     transform: translateX(0);
+  }
+
+  /* Ensure main content takes full width on mobile */
+  .app-layout .main-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+    flex: 1;
   }
 
   .mobile-menu-toggle {
@@ -952,6 +964,13 @@
 
 .mobile-menu-toggle {
   display: none;
+}
+
+/* App Layout */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
 }
 
 /* Additional Mobile Responsive Styles */
