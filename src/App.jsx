@@ -570,8 +570,11 @@ const Contact = () => {
 // --- Main App ---
 
 import ProjectDetail from './ProjectDetail';
+import { Menu, X } from 'lucide-react';
 
 function PortfolioLayout({ activeSection, setActiveSection }) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   useEffect(() => {
     const handleScroll = () => {
       const sections = ['home', 'about', 'skills', 'projects', 'contact'];
@@ -590,15 +593,25 @@ function PortfolioLayout({ activeSection, setActiveSection }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [setActiveSection]);
 
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
   return (
-    <div className="app-layout">
-      <Sidebar activeSection={activeSection} setActiveSection={(id) => {
-        setActiveSection(id);
-        const element = document.getElementById(id);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }} />
+    <div className={`app-layout ${isMenuOpen ? 'menu-open' : ''}`}>
+      <button className="mobile-menu-toggle" onClick={toggleMenu}>
+        {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+      </button>
+
+      <Sidebar
+        activeSection={activeSection}
+        setActiveSection={(id) => {
+          setActiveSection(id);
+          setIsMenuOpen(false); // Close menu on click
+          const element = document.getElementById(id);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }}
+      />
 
       <main className="main-content">
         <Hero />
@@ -607,6 +620,19 @@ function PortfolioLayout({ activeSection, setActiveSection }) {
         <Projects />
         <Contact />
       </main>
+
+      {/* Mobile Backdrop */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            className="mobile-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsMenuOpen(false)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
