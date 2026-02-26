@@ -4,7 +4,7 @@
   top: 0;
   width: var(--sidebar-width);
   height: 100vh;
-  background-color: transparent;
+  background-color: var(--primary);
   display: flex;
   flex-direction: column;
   padding: 2rem 0;
