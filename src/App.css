@@ -968,9 +968,20 @@
 
 /* App Layout */
 .app-layout {
-  display: flex;
+  display: block;
   min-height: 100vh;
   position: relative;
+}
+
+.app-layout .main-content {
+  margin-left: var(--sidebar-width);
+}
+
+@media (max-width: 992px) {
+  .app-layout .main-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
 }
 
 /* Additional Mobile Responsive Styles */

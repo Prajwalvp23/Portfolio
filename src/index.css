@@ -116,6 +116,7 @@ h3,
   .app-wrapper {
     cursor: auto;
     /* Show default cursor on mobile */
+    display: block;
   }
 
   .custom-cursor,
@@ -124,7 +125,10 @@ h3,
   }
 
   .main-content {
-    margin-left: 0;
+    margin-left: 0 !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    flex: none !important;
   }
 
   .sidebar {
