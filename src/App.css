@@ -955,11 +955,10 @@
   }
 }
 
+/* Default: hide mobile menu toggle on desktop */
 .mobile-menu-toggle {
   display: none;
 }
-
-
 
 /* Additional Mobile Responsive Styles */
 @media (max-width: 768px) {
