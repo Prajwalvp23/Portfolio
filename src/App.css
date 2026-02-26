@@ -885,8 +885,9 @@
   }
 
   /* Hide desktop sidebar on mobile */
-  .desktop-sidebar {
-    display: none;
+  .desktop-sidebar,
+  .sidebar {
+    display: none !important;
   }
 
   /* Mobile Dropdown Navigation */
