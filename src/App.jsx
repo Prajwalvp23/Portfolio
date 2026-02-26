@@ -66,6 +66,31 @@ export const PROJECTS_DATA = [
 
 // --- Sub-Components ---
 
+const MobileNav = ({ activeSection, setActiveSection }) => {
+  const menuItems = [
+    { id: 'home', label: 'HOME', icon: Home },
+    { id: 'about', label: 'ABOUT', icon: User },
+    { id: 'skills', label: 'SKILLS', icon: Layers },
+    { id: 'projects', label: 'PROJECTS', icon: Briefcase },
+    { id: 'contact', label: 'CONTACT', icon: Mail },
+  ];
+
+  return (
+    <nav className="mobile-nav">
+      {menuItems.map((item) => (
+        <button
+          key={item.id}
+          className={`mobile-nav-item ${activeSection === item.id ? 'active' : ''}`}
+          onClick={() => setActiveSection(item.id)}
+        >
+          <item.icon size={20} />
+          <span>{item.label}</span>
+        </button>
+      ))}
+    </nav>
+  );
+};
+
 const Sidebar = ({ activeSection, setActiveSection }) => {
   const menuItems = [
     { id: 'home', label: 'HOME', icon: Home },
@@ -597,15 +622,25 @@ function PortfolioLayout({ activeSection, setActiveSection }) {
 
   return (
     <div className={`app-wrapper ${isMenuOpen ? 'menu-open' : ''}`}>
-      <button className="mobile-menu-toggle" onClick={toggleMenu}>
-        {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-      </button>
+      {/* Desktop Sidebar */}
+      <div className="desktop-sidebar">
+        <Sidebar
+          activeSection={activeSection}
+          setActiveSection={(id) => {
+            setActiveSection(id);
+            const element = document.getElementById(id);
+            if (element) {
+              element.scrollIntoView({ behavior: 'smooth' });
+            }
+          }}
+        />
+      </div>
 
-      <Sidebar
+      {/* Mobile Bottom Navigation */}
+      <MobileNav
         activeSection={activeSection}
         setActiveSection={(id) => {
           setActiveSection(id);
-          setIsMenuOpen(false); // Close menu on click
           const element = document.getElementById(id);
           if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
@@ -620,19 +655,6 @@ function PortfolioLayout({ activeSection, setActiveSection }) {
         <Projects />
         <Contact />
       </main>
-
-      {/* Mobile Backdrop */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            className="mobile-backdrop"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsMenuOpen(false)}
-          />
-        )}
-      </AnimatePresence>
     </div>
   );
 }
