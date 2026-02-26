@@ -596,7 +596,7 @@ function PortfolioLayout({ activeSection, setActiveSection }) {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <div className={`app-layout ${isMenuOpen ? 'menu-open' : ''}`}>
+    <div className={`app-wrapper ${isMenuOpen ? 'menu-open' : ''}`}>
       <button className="mobile-menu-toggle" onClick={toggleMenu}>
         {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
       </button>

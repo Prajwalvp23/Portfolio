@@ -886,7 +886,7 @@
 
   /* Mobile Nav Styles - Sidebar completely hidden by default */
   .sidebar {
-    transform: translateX(-100%);
+    transform: translateX(-100%) !important;
     width: 280px;
     padding: 1.5rem 0;
     position: fixed;
@@ -897,14 +897,7 @@
   }
 
   .menu-open .sidebar {
-    transform: translateX(0);
-  }
-
-  /* Ensure main content takes full width on mobile */
-  .app-layout .main-content {
-    margin-left: 0 !important;
-    width: 100% !important;
-    flex: 1;
+    transform: translateX(0) !important;
   }
 
   .mobile-menu-toggle {
@@ -966,23 +959,7 @@
   display: none;
 }
 
-/* App Layout */
-.app-layout {
-  display: block;
-  min-height: 100vh;
-  position: relative;
-}
 
-.app-layout .main-content {
-  margin-left: var(--sidebar-width);
-}
-
-@media (max-width: 992px) {
-  .app-layout .main-content {
-    margin-left: 0 !important;
-    width: 100% !important;
-  }
-}
 
 /* Additional Mobile Responsive Styles */
 @media (max-width: 768px) {
