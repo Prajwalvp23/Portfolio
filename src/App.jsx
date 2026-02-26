@@ -66,28 +66,43 @@ export const PROJECTS_DATA = [
 
 // --- Sub-Components ---
 
-const MobileNav = ({ activeSection, setActiveSection }) => {
+const MobileNav = ({ activeSection, setActiveSection, isOpen, setIsOpen }) => {
   const menuItems = [
-    { id: 'home', label: 'HOME', icon: Home },
-    { id: 'about', label: 'ABOUT', icon: User },
-    { id: 'skills', label: 'SKILLS', icon: Layers },
-    { id: 'projects', label: 'PROJECTS', icon: Briefcase },
-    { id: 'contact', label: 'CONTACT', icon: Mail },
+    { id: 'home', label: 'HOME' },
+    { id: 'about', label: 'ABOUT ME' },
+    { id: 'skills', label: 'TECHNICAL SKILLS' },
+    { id: 'projects', label: 'PROJECTS' },
+    { id: 'contact', label: 'GET IN TOUCH' },
   ];
 
+  const handleClick = (id) => {
+    setActiveSection(id);
+    setIsOpen(false);
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <nav className="mobile-nav">
-      {menuItems.map((item) => (
-        <button
-          key={item.id}
-          className={`mobile-nav-item ${activeSection === item.id ? 'active' : ''}`}
-          onClick={() => setActiveSection(item.id)}
-        >
-          <item.icon size={20} />
-          <span>{item.label}</span>
-        </button>
-      ))}
-    </nav>
+    <div className="mobile-nav-dropdown">
+      <button className="mobile-nav-toggle" onClick={() => setIsOpen(!isOpen)}>
+        <Menu size={24} />
+      </button>
+      {isOpen && (
+        <nav className="mobile-dropdown-menu">
+          {menuItems.map((item) => (
+            <button
+              key={item.id}
+              className={`mobile-dropdown-item ${activeSection === item.id ? 'active' : ''}`}
+              onClick={() => handleClick(item.id)}
+            >
+              {item.label}
+            </button>
+          ))}
+        </nav>
+      )}
+    </div>
   );
 };
 
@@ -598,7 +613,7 @@ import ProjectDetail from './ProjectDetail';
 import { Menu, X } from 'lucide-react';
 
 function PortfolioLayout({ activeSection, setActiveSection }) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -618,10 +633,8 @@ function PortfolioLayout({ activeSection, setActiveSection }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [setActiveSection]);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
   return (
-    <div className={`app-wrapper ${isMenuOpen ? 'menu-open' : ''}`}>
+    <div className="app-wrapper">
       {/* Desktop Sidebar */}
       <div className="desktop-sidebar">
         <Sidebar
@@ -636,16 +649,12 @@ function PortfolioLayout({ activeSection, setActiveSection }) {
         />
       </div>
 
-      {/* Mobile Bottom Navigation */}
+      {/* Mobile Dropdown Navigation */}
       <MobileNav
         activeSection={activeSection}
-        setActiveSection={(id) => {
-          setActiveSection(id);
-          const element = document.getElementById(id);
-          if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-          }
-        }}
+        setActiveSection={setActiveSection}
+        isOpen={isMobileNavOpen}
+        setIsOpen={setIsMobileNavOpen}
       />
 
       <main className="main-content">
